@@ -40,6 +40,10 @@ To run piethein.py use the following command:
 ```bash
 python piethein.py
 ```
+if u are using Windows use:
+```bash
+py -3 example_bot.py
+```
 
 ## commands
 
