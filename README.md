@@ -1,2 +1,4 @@
 # Bot_Piet_Hein
-Piet Hein de Discord bot.  Piet hein is een prachtige Disco bot gemaakt voor de fun in Python. Het is meer een klein projectje om mee rond te spelen
+Piet Hein de Discord bot.
+Piet hein is een prachtige Discord bot gemaakt voor de fun in Python.
+Het is een klein projectje om mee rond te spelen.
