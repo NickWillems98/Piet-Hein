@@ -1,6 +1,6 @@
-# discord bot in python 
-# 22 mei 2021
-# Nick Willems
+# piet Hein de Discord bot
+# Gemaakt door: Nick Willems
+# 05-01-22
 
 
 import discord
@@ -54,45 +54,22 @@ class YTDLSource(discord.PCMVolumeTransformer):
         return cls(discord.FFmpegPCMAudio(filename, **ffmpeg_options), data=data)
 
 
+token = ':)'
+botpiet = commands.Bot(command_prefix = 'piet ')
 
 
-botpiet = commands.Bot(command_prefix = "piet ")
-
-
-#random events
+# events
 @botpiet.event
 async def on_ready():
-    await botpiet.change_presence(status=discord.Status.online, activity=discord.Game("West-Indische Compagnie"))
-    print("Piet Hein is alive.")
 
-@botpiet.event 
-async def on_member_join(member):
-    print(f"{member} has joined the server.")
-    channel = discord.utils.get(member.guild.channels, name='general')
-    await channel.send(f"Welkom aanboord {member.mention}! Hopelijk wordt je niet snel zeeziek!")
-
-@botpiet.event
-async def on_member_remove(member):
-    print (f"{member} is weggegaan :( ")
+    await botpiet.change_presence(status=discord.Status.online, activity=discord.Game("De Zilvervloot"))
+    print("Piet is online!")
 
 
+# Music player
+@botpiet.command(name='kom', help='piet joined the voice channel.')
+async def speel(ctx):
 
-
-#random commands
-@botpiet.command(name="hey", help="Piet zegt hallo terug." )
-async def hey(ctx):
-    await ctx.send("wsup my dude. Mijn naam is Pieter Pietersen Heyn.")
-
-@botpiet.command(name="ping", help="Laat ping zien van Piet." )
-async def ping(ctx):
-    await ctx.send(f"latency is {round(botpiet.latency * 1000)}ms")
-
-
-
-
-#music player commands
-@botpiet.command(name='speel', help='Geef Piet een youtube link dan speelt hij deze voor je af.')
-async def speel(ctx, url):
     if not ctx.message.author.voice:
         await ctx.send("Je moet in een voice channel zitten om dit commando te gebruiken...")
         return
@@ -102,22 +79,37 @@ async def speel(ctx, url):
 
     await channel.connect()
 
-    server = ctx.message.guild
-    voice_channel = server.voice_client
+@botpiet.command(name='weg', help='Piet gaat uit de voice channel.')
+async def weg(ctx):
+    voice_client = ctx.message.guild.voice_client
+    await voice_client.disconnect()
 
-    async with ctx.typing():
-        player = await YTDLSource.from_url(url, loop=botpiet.loop)
-        voice_channel.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
+@botpiet.command(name='speel', help='Geef Piet een youtube link dan speelt hij deze voor je af.')
+async def speel(ctx, url):
+    voice_client = ctx.message.guild.voice_client
 
-    await ctx.send('**Now playing:** {}'.format(player.title))
+    if ctx.voice_client.is_playing():
+        voice_client.pause()
 
+        async with ctx.typing():
+            player = await YTDLSource.from_url(url, loop=botpiet.loop, stream=True)
+            ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
+        
+        await ctx.send('**Vette compositie:** {}'.format(player.title))
+
+    else:
+        async with ctx.typing():
+            player = await YTDLSource.from_url(url, loop=botpiet.loop, stream=True)
+            ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
+        
+        await ctx.send('**Vette compositie:** {}'.format(player.title))
 
 @botpiet.command(name='stop', help='Piet stopt met spelen van muziek.')
 async def stop(ctx):
     voice_client = ctx.message.guild.voice_client
-    await voice_client.disconnect()
+    await voice_client.pause()
 
 
 
 
-botpiet.run("PM9YGEKbGarSgl6zMxlrejpgUA2cR73i") 
+botpiet.run(token)
