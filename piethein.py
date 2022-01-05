@@ -107,9 +107,13 @@ async def speel(ctx, url):
 @botpiet.command(name='stop', help='Piet stopt met spelen van muziek.')
 async def stop(ctx):
     voice_client = ctx.message.guild.voice_client
-    await voice_client.pause()
+    voice_client.pause()
 
+@botpiet.command(name='volume', help='Verander het volume van piet met een cijfer')
+async def volume(ctx, volume: int):
 
+    ctx.voice_client.source.volume = volume / 100
+    await ctx.send("Volume veranderd naar {}%".format(volume))
 
 
 botpiet.run(token)
