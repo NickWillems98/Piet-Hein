@@ -53,3 +53,5 @@ The following commands can be used in Discord:
 - **weg**     Piet will leave your voice channel
 - **speel**   Piet will play the profided yt link
 - **stop**    Piet stop playing music
+- **volume**  Set volume of audio Piet is playing
+- **help**    Shows all commands
