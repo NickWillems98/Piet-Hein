@@ -1,6 +1,6 @@
 # Piet Hein
 
-Piet Hein is an Discord bot created in Python. It is a small learing project for me. 
+Piet Hein is an Discord bot created in Python. It is a small learning project for me. 
 
 ## Installation
 
