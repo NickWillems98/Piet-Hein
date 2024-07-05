@@ -27,7 +27,7 @@ pip install asyncio
 To run the script u first need to put in ur own bot token like so:
 
 ```python
-token = 'PUT_YOUR_TOKEN_HEREN'
+token = 'PUT_YOUR_TOKEN_HERE!'
 ```
 If u are running linux use the following command to make the scipt execudable:
 
